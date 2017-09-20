@@ -1,0 +1,468 @@
+<!DOCTYPE HTML>
+
+<!--
+	Photon by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+
+<!--
+	Navigation bar from https://www.w3schools.com/
+-->
+
+<html>
+	<head>
+		<title>An Introductory How-To Guide on Using NASA's APOD API</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/nav_bar/nav.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+
+	<body>
+
+		<!-- Top nav bar -->
+			<div class="topnav" id="myTopnav">
+			  <a><strong>Quick Nav</strong></a>
+			  <a href="#apiIntro">API Intro</a>
+			  <a href="#jsonIntro">JSON Intro</a>
+			  <a href="#getApiKey">Get a NASA API Key</a>
+			  <a href="#todayAPOD">Today's APOD</a>
+			  <a href="#archivedAPOD">Archived APOD</a>
+			  <a href="#backgroundAPOD">Having Fun</a>
+			  <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+			</div>
+
+		<!-- Header -->
+			<section id="header">
+				<div class="inner">
+					<span class="icon major fa-space-shuttle fa-2x"></span><br>
+
+					<h1>An Introductory How-To Guide <br>
+					on Using NASA's <br>
+					<strong>Astronomy Picture of the Day</strong> API</h1>
+
+					<p>By Derrick Li</p><br><br>
+
+					<ul class="actions">
+						<li><a href="#apiIntro" class="button scrolly">Let's Get Started!</a></li>
+					</ul>
+
+				</div>
+			</section>
+
+
+		<!-- API Intro -->
+			<section id="apiIntro" class="main style1">
+				<div class="container">
+					<header class="major special">
+						<h2>Brief Introduction to APIs</h2>
+					</header>
+
+					<section>
+						<h4>What is an API?</h4>
+
+						<p>API is an acronym for Application Programming Interface. APIs provides a simple interface for a complicated system we may not need to know all the details about. We can perform complex tasks and request resources from the API service through simple commands and supplying it with our parameters. As an analogy, imagine the scenario where a customer (user) visits a coffee shop. All the customer (user) needs to know are the menu items (methods and parameters) needed to place an order (request). If all the parameters are correctly followed, e.g. the user doesn't try to order off-menu, the barista, who acts as the API, can correctly take in the order (request) and  deliver it to the kitchen, which acts as the application in this scenario. The kitchen processes the request and produces a response, in this case, it may be a cappuccino. The barista (API) receives this cappuccino (response) and delivers it back to the user. The customer (user) successfully made a request and received a response without having to know all the details of what went on in the kitchen, i.e. what the receipe was, what equipment was used, how the coffee beans were sourced, etc. All the user needed to know were the methods offered by the API, the parameters these methods can take, and what to expect back in response to their request.</p>
+
+						<div class="box alt">
+							<div class="box alt row uniform 50%">
+								<div class="12u"><span class="image fit"><img src="images/api.jpeg" alt="" />
+								<h6>Photo: https://www.handsonconnect.org/blog/2016/8/17/what-is-an-api-and-why-should-i-care</h6>
+								</span></div>
+							</div>
+						</div>
+
+						<p>In this guide, we'll discuss the NASA Astronomy Picture of the Day (abbreviated APOD) API. It is a web API. For this particular web API, we can interact with it through the URL. Making a request through the URL involves including a query string to the end. The query string is how we encode the parameters we want to send in the request. An example of this is as follow,
+
+							<header class="special">
+								<code>http://www.example.com/index.html?field1=value1&field2=value2</code>
+							</header><br>
+
+						The hostname is <code>http://www.example.com/</code>, the resource we want to access is <code>index.html</code>, and the query string is <code>field1=value1&field2=value2</code>. A <code>?</code> separates the resource location and query string. Each key-value pair inside the query string is separated by a <code>&</code>. In this example, you see two key-value pairs. Within each pair, the key and value are separated by a <code>=</code>. This kind of request is known as a GET request - we use the URL to encode the parameters and make the request. In contrast, there is something known as a POST request. In a POST request, the body of the request encodes the parameters of the request. The URL of a POST request can contain a query string as well. What signifies a request to be a POST is the use of the request body. After we send the request to the NASA APOD API using a URL query string, we'll get back what is know as JSON formatted data. We'll discuss this in the next section. </p>
+
+						<p>Below are some links I found helpful in understanding the basics of APIs.</p>
+
+						<p><a href="https://schoolofdata.org/2013/11/18/web-apis-for-non-programmers/">Article: "Web APIs for non-programmers" by School of Data</a><br>
+
+						<a href="https://www.youtube.com/watch?v=s7wmiS2mSXY">Video: "What is an API?"" by MuleSoft</a><br>
+
+						<a href="https://www.youtube.com/watch?v=7YcW25PHnAA">Video: "REST API concepts and examples" by WebConcepts</a></p>
+
+						<hr>
+
+						<h4>What APIs do NASA offer?</h4>
+
+						<p>Besides the popular Astronomy Picture of the Day API, NASA offers a number of other APIs. Below is a list briefly summarizing the APIs available through NASA. If you wish to learn more, click on the button following the list to visit NASA API portal.</p>
+
+						<ul>
+							<li><a href="https://api.nasa.gov/api.html#apod">APOD (Astronomy Picture of the Day)</a>: A featured image or video each day. Has functionality to search past APOD media.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#NeoWS">Asteroids - NeoWs (Near Earth Object Web Service)</a>: Browse and search a data-set for information on asteroids near Earth.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#EPIC">EPIC (Earth Polychromatic Imaging Camera)</a>: Daily imagery collected by DSCOVR's EPIC instrument.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#EONET">EONET (Earth Observatory Natural Event Tracker)</a>: View the entire globe and imagery of natural events, e.g. storms, as they occur.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#earth">Earth</a>: Access database of satellite images of specific locations and exact dates. Can be used to monitor deforestation, assess damage from natural diasters, etc.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#Images">NASA Image and Video Library</a>: Browse and search through a collection of images and videos by NASA.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#MarsPhotos">Mars Rover Photos</a>: Get images taken by NASA's Curiosity, Opportunity, and Spirit rovers on Mars.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#patents">Patents</a>: Browse and search through NASA's patent portfolio.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#sounds">Sounds</a>: Browse and search through a NASA's file collection of sounds from space.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#ssd_CNEOS">SSD/CNEOS (Solar System Dynamics/Center for Near-Earth Object Studies)</a>: Provides an interface for access to various databases relating to asteroids, comets, fireball impact data, and impact risk assessment data.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#techport">Techport</a>: Get available data on projects NASA is working on.</li>
+
+							<li><a href="https://api.nasa.gov/api.html#trek">Vesta/Moon/Mars Trek WMTS</a>: An interface to access Moon Trek, Mars Trek, and Vesta Trek NASA web-based portals.</li>
+						</ul>
+
+						<header class="special">
+							<ul class="actions">
+								<li><a href="https://api.nasa.gov/index.html" class="button icon">NASA API Portal</a></li>
+							</ul>
+						</header>
+
+					</section>
+				</div>
+			</section>
+
+
+		<!-- JSON Intro -->
+			<section id="jsonIntro" class="main style2">
+				<div class="container">
+					<header class="major special">
+						<h2>Brief Introduction to JSON</h2>
+					</header>
+
+					<section>
+						<h4>What is JSON?</h4>
+
+						<p>JSON is an acronym for JavaScript Object Notation. It's an simple format used to organize and structure readable data. It's primarily used between servers and web applications. A JSON object contains key-value pairs separated by commas and completely enclosed in parentheses. Both the key and value need to be strings and must be written using double quotes <code>""</code>. Below is a example of a JSON object assigned to a variable <code>philip</code>. It contains six key-value pairs.</p>
+
+<pre><code>var philip =
+{
+  "first_name" : "Philip",
+  "middle_initial" : "J",
+  "last_name" : "Fry",
+  "date_of_birth" : "August 9, 1975",
+  "employer" : "Planet Express",
+  "occupation" : "Delivery Boy"
+}</code></pre>
+
+						<hr>
+
+						<h4 id="howToUseJSON">How to use JSON?</h4>
+
+						<p>We can extract data from it simply by referring to the variable we assigned the JSON object to and using the dot or bracket notation. For example, <code>philip.employer</code> and <code>philip["employer"]</code> will both output <code>Planet Express</code>.</p>
+
+						<p>Now that we know what is JSON and how to work with it, there's just a few extra steps we need to take in order to send and receive JSON data. In order to send JSON data to a web server, we must first convert it to a single string. We can use the browser built-in <code>JSON.stringify()</code> function to do so. We can assign the results of the stringify function to a variable and then send this variable. For example, <code>var philipString = JSON.stringify(philip)</code> passes <code>philip</code> into the stringify function and assigns the results to a new variable <code>philipString</code>. The output of <code>philipString</code> is a long string:
+
+						<pre><code>"{"first_name":"Philip","middle_initial":"J","last_name":"Fry","date_of_birth":"August 9, 1975","employer":"Planet Express","occupation":"Delivery Boy"}"</code></pre>
+
+						Likewise, we will receive JSON data in a single string format from the web server. Fortunately, there's another built-in function, <code>JSON.parse()</code>, that can convert this JSON string back to a JSON object so that we can easily extract data from it. For example, <code>var returnedPhilip = JSON.parse(philipString)</code> will pass <code>philipString</code> into the parse function and assign the results to a new variable <code>returnedPhilip</code>. The output of <code>returnedPhilip</code> is identical to <code>philip</code>, the original JSON object.</p>
+
+					</section>
+				</div>
+			</section>
+
+		<!-- Getting an NASA API Key -->
+			<section id="getApiKey" class="main style1">
+				<div class="container">
+					<header class="major special">
+						<h2>API Key</h2>
+					</header>
+
+					<section>
+						<h4>What is an API key?</h4>
+
+						<p>An API key is a unique passcode the API service provides to you. It's primary purpose is for the service behind the API to identify the origin of the request. This enables the API to keep track of the number of requests made to their service by any particular key and helps to prevent abuse from high-volume requests. Some APIs are paid services. An API key enables the user to identify themselves so they are able to use the service and allows the API service to keep track of the usage for billing purposes. So it's important to not publicly share your API keys.</p>
+
+						<hr>
+
+						<h4>Getting a NASA API Key</h4>
+
+						<p>Getting an API key from NASA is very simple! The button below will take you to the page where you can apply for an API key. Just follow the instructions and an alphanumeric key will be emailed to you.</p>
+
+						<header class="special">
+							<ul class="actions">
+								<li><a href="https://api.nasa.gov/index.html#apply-for-an-api-key" class="button icon fa-angle-double-right">Get Your NASA API Key!</a></li>
+							</ul>
+						</header>
+
+						<p>NASA provides a trial key that allows users to quickly explore their APIs prior to applying for an API key of their own. This special API key is <code>DEMO_KEY</code>. However, there are some strict rate-limits imposed on this trial key, specifically 30 requests per IP address per hour (maximum 50 requests per IP address per day). If you sign up for a NASA API key, the rate-limit is increased significantly, to 1,000 requests per hour. Keep in mind it is not at all common for APIs to have a kind of trial key. In this guide, you might hit the rate-limit restriction using NASA's trial key, so we will use a key I generated instead.</p>
+
+					</section>
+
+				</div>
+			</section>
+
+		<!-- NASA Today's APOD -->
+			<section id="todayAPOD" class="main style2">
+				<div class="container">
+					<header class="major special">
+						<h2>How to use NASA's APOD API to get Today's Media</h2>
+					</header>
+
+					<section>
+						<h4>API Documentation</h4>
+
+						<p>Now that you have some understanding of APIs and a NASA API key, you're ready to use any of the APIs offered by NASA. We'll focus on the Astronomy Picture of the Day API. Fortunately, NASA's APOD API has some built-in defaults which makes it very simple and convenient to access today's media. You may notice I said media. NASA's APOD can actually return a URL to a photo or video. Unfortunately, NASA's APOD API documenation isn't very detailed, and as it turns out, isn't up-to-date. Don't worry though! We'll discuss it thoroughly in the following sections.</p>
+
+						<header class="special">
+							<ul class="actions">
+								<li><a href="https://api.nasa.gov/api.html#apod" class="button">NASA APOD API Documentation</a></li>
+							</ul>
+						</header>
+
+						<hr>
+
+						<h4>Using the URL to Make a Query</h4>
+
+						<p>Without doing anything fancy, we can make a request to the NASA APOD API by just using the URL to submit the query or request (specifically a GET request). At the time of writing this guide, entering <code>https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY</code> into the browser yields the following chunk of text returned:</p>
+<pre><code>{
+  "copyright": "Yuri BeletskyCarnegieLas Campanas ObservatoryTWAN",
+  "date": "2017-05-09",
+  "explanation": "Do you see it?  This common question frequently precedes the rediscovery of one of the most
+    commonly recognized configurations of stars on the northern sky: the Big Dipper.  This grouping of stars is
+    one of the few things that has likely been seen, and will be seen, by every generation.   The Big Dipper is
+    not by itself a constellation.  Although part of the constellation of the Great Bear (Ursa Major), the Big
+    Dipper is an asterism that has been known by different names to different societies. Five of the Big Dipper
+    stars are actually near each other in space and were likely formed at nearly the same time.  Connecting two
+    stars in the far part of the Big Dipper will lead one to Polaris, the North Star, which is part of the Little
+    Dipper.   Relative stellar motions will cause the Big Dipper to slowly change its configuration over the next
+    100,000 years. Pictured in late April, the Big Dipper was actually imaged twice -- above and below distant
+    Chilean volcanoes, the later reflected from an unusually calm lagoon.    Follow APOD on: Facebook,  Google
+    Plus,  Instagram, or Twitter",
+  "hdurl": "https://apod.nasa.gov/apod/image/1705/DoubleDipper_Beletsky_1199.jpg",
+  "media_type": "image",
+  "service_version": "v1",
+  "title": "Big Dipper Above and Below Chilean Volcanoes",
+  "url": "https://apod.nasa.gov/apod/image/1705/DoubleDipper_Beletsky_960.jpg"
+}</code></pre>
+
+						<p>Thankfully we know some JSON, so we know that what we are getting back is an object containing a series of key-value pairs separated by commas. If you take the URL assigned to the <code>"hdurl"</code> or <code>"url"</code> property and enter it into the browser, you should get a cool-looking astronomy photo displayed.</p>
+
+						<hr>
+
+						<h4>Displaying the APOD Automatically</h4>
+
+						<p>Now that you know know how to make a request using the a URL query string, you might be wondering how to automate the process of getting the APOD media and displaying it to the browser. Below is an example of code that can do just that. Click on the <strong>Result</strong> tab to view the finished page.</p>
+
+						<iframe width="100%" height="300" src="https://jsfiddle.net/liderrick/djhh8aua/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe><br><br>
+
+						<p>Let's go through the process of setting this up. Under the <strong>HTML</strong> tab, you'll see the page is set up with a few placeholder - namely a <code>&ltdiv&gt</code> for the image or video and a few <code>&ltfigcaption&gt</code>to hold the <code>date</code>, <code>explanation</code>, <code>title</code>, and <code>copyright</code> values. If the image or media is in the public domain, the returned JSON object may not include a copyright property. Thus we will have in our JavaScript code a conditional statement to evaluate the existence of this property and display it if it does. The <strong>CSS</strong> tab contains some styling code that provides the HTML with some aesthetics. It's not critically important in this context so we will not discuss any CSS aspect in this guide.</p>
+
+						<p>Let's start at the very beginning of the <strong>JavaScript</strong> tab. The API key is saved as in the variable <code>apiKey</code> at the top of the code for easy reference. And should you want to share your code, having a single location for your key makes it easy to remove your key prior to sharing. After that you'll see the <code>XMLHttpRequest</code> constructor is called and the result of that call returns a XMLHttpRequest object which is assigned to the variable <code>req</code>. The XMLHttpRequest object is what you use to make a HTTP request. It has a variety of <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest">methods</a> that you can call, including loading the object with data (i.e. a URL query string for a GET request) or extracting data from the object once a response has been received. We call the <code>XMLHttpRequest.open()</code> method through our <code>req</code> variable. The syntax for this method is <code>XMLHttpRequest.open(method, url, async)</code>. In this case, the <code>method</code> we want to use is <code>"GET"</code>, the <code>URL</code> we want to send the GET request to is <code>"https://api.nasa.gov/planetary/apod?api_key=" + apiKey</code>, where <code>apiKey</code> will be substituted with our actual API key, and <code>async</code> is set to <code>true</code> because we want to make the call asynchronously. This allows the page to continue running its program without having to stop and wait for a response from the XMLHttpRequest object once we send it off.</p>
+
+						<p>So in order for us to know that we received a reponse, we need to add an Event Listener to the object using the appropriately named <code>addEventListener()</code> method. Its basic syntax is <code>target.addEventListener(type, listener[, options])</code>. The <code>target</code> in this case is our XMLHttpRequest object in <code>req</code>. The <code>type</code> refers to its event type, in this case we set it to <code>"load"</code> - as in we want to trigger this Event Listener once the resource we requested has finished loading. The second argument we provide is the callback function we want to execute once the resource has been loaded. This callback function makes up the bulk of the program needed to render the page. Before we get to that, I want to point out that if you scroll most of the way down, you'll see the command <code>req.send(null)</code>. This is how we send off the XMLHttpRequest object. The <code>XMLHttpRequest.send()</code> method has an optional argument that takes in data to set as the request body. This is typically done for a POST request, where we usually provide a stringified JSON object, like <a href="#howToUseJSON">this</a>, in the request body. However, for our purposes, we don't need to send anything in the request body since we use the URL query string to send our request data. Thus we set the optional argument to <code>null</code> so we explicitly know nothing is being sent in the request body.
+						</p>
+
+						<p>Now back to the callback function. The syntax may look a bit odd and it's because the callback function is defined on the spot as it is being supplied as an argument to the function. The first thing that is done in the callback function is to have an <code>if/else</code> statement to evaluate the status of the <code>req</code> object. The <code>XMLHttpRequest.status</code> property holds the numerical HTTP status code of the response. The general rule of thumb is that anything in the 200's and 300's mean the response is OK, while anything in the 400's and 500's meant some error occurred. You can read more about it on <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">Mozilla's HTTP response status codes page</a>. So if the status of the response is good, we'll execute the commands necessary to extract the information from the response and render our page, else, the only thing that is done is this line of code towards the bottom of the page, <code>console.log("Error in network request: " + req.statusText)</code>, which logs the error status to <code>console.log</code>.</p>
+
+						<p>The response we get back from the API call is stored in the <code>XMLHttpRequest.responseText</code> property. The value that is stored here is a stringified JSON object. As we learned in the <a href="#howToUseJSON">"How to Use JSON?"</a> section above, in order to access the key-value pairs we must first parse the string using the browser built-in function <code>JSON.parse()</code>. We do this in the line <code>var response = JSON.parse(req.responseText)</code>, which assigns the results of the parsing to the variable <code>response</code>. Now <code>response</code> holds a JSON object which we can access the values of using either the dot or bracket notation. We will use the dot notation in this guide since it provides a cleaner look.
+						</p>
+
+						<p>Before we process <code>response</code>, let's clean up anything on the page and give it a blank canvas to work with. This is primarily needed to prevent two media from coexisting on the same page. Also, as briefly mentioned, the <code>copyright</code> property may not be present in all returned JSON responses, so we want to erase that caption so it doesn't carry over. The following block of code clears the text content from all the <code>&ltfigcaption&gt</code> we have in our HTML page by targeting the element's ID through the DOM:</p>
+
+<pre><code>document.getElementById("todayCaption1").textContent = "";
+document.getElementById("todayCaption2").textContent = "";
+document.getElementById("todayCaption3").textContent = "";
+document.getElementById("todayCaption4").textContent = "";</code></pre>
+
+						<p>And the following section of code removes anything that is in the <code>&ltdiv&gt</code> which holds the APOD media - either an <code>&ltimg&gt</code> for an image or <code>&ltiframe&gt</code> for a video. This removal is done again through the DOM, this time using <code>removeChild()</code> method if <code>hasChildNodes()</code> returns <code>true</code> on that <code>&ltdiv&gt</code>.</p>
+
+<pre><code>var todayPhotoDivNode = document.getElementById("todayPhotoDiv");
+while(todayPhotoDivNode.hasChildNodes() == true) {
+  todayPhotoDivNode.removeChild(todayPhotoDivNode.lastChild);
+}</code></pre>
+
+						<p>Now we deal with the reponse. First we look at the <code>media_type</code> property of the <code>response</code> object. We have <code>if / else if</code> blocks to deal with whether it's an <code>image</code> or <code>video</code>. Thus, far I've only encountered these two categories of <code>media_type</code> thus far. At the time of writing this, the API documentation doesn't mention much about this. Through the DOM, we create an <code>&ltimg&gt</code> for an image or an <code>&ltiframe&gt</code> for a video, we give it an identifier to make it easy to target, and then add these as child nodes to the media <code>&ltdiv&gt</code> on the main page.</p>
+
+<pre><code>if(response.media_type == "image") {
+  var img = document.createElement("img");
+  img.id = "todayPhoto";
+  document.getElementById("todayPhotoDiv").appendChild(img);
+
+  if(response.hasOwnProperty("hdurl")) {
+  	document.getElementById("todayPhoto").src = response.hdurl;
+  } else {
+  	document.getElementById("todayPhoto").src = response.url;
+  }
+} else if(response.media_type == "video") {
+  var vid = document.createElement("iframe");
+  vid.id = "todayVideo";
+  document.getElementById("todayPhotoDiv").appendChild(vid);
+
+  document.getElementById("todayVideo").src = response.url;
+}</code></pre>
+
+					<p>The API documentation states that the query string can take a parameter <code>hd</code> and a bool value. It returns a high resolution image if the bool value is true. This info seems to be outdated. Regardless of whether or not you include the <code>hd</code> query parameter and supply it with <code>true</code> or <code>false</code>, the response will include the <code>hdurl</code> property if it exist. Typically if the <code>media_type</code> is an <code>image</code>, both <code>hdurl</code> and <code>url</code> exists. If it's a <code>video</code>, only the <code>url</code> property exists. Thus, in our code, we have to assign the URL in the <code>src</code> property of our <code>&ltimg&gt</code> or <code>&ltiframe&gt</code> accordingly. As a precaution for future APOD media, if the <code>media_type</code> is an <code>image</code>, the code will evaluate the presense of a <code>hdurl</code> property using the <code>hasOwnProperty()</code> function, if it exists, it uses that URL as the source for the image, if not, then <code>url</code> is used instead.</p>
+
+					<p>Lastly, the following block of code deals with extracting the strings stored with the <code>title</code>, <code>date</code>, <code>explanation</code>, and <code>copyright</code> properties of the <code>response</code> object. As previously mentioned, the <code>copyright</code> property may not always be returned, thus we use <code>hasOwnProperty()</code> again to test for it before we set the caption. If we didn't not do this, then the caption would hold <code>undefined</code> if the property didn't exist.</p>
+
+<pre><code>document.getElementById("todayCaption1").textContent = "Title: " + response.title;
+document.getElementById("todayCaption2").textContent = "Date: " + response.date;
+document.getElementById("todayCaption3").textContent = "Explanation: " + response.explanation;
+
+if(response.hasOwnProperty("copyright")) {
+  document.getElementById("todayCaption4").textContent = "Copyright: " + response.copyright;
+}
+
+</code></pre>
+
+				<p>Now with all this put together, you'll get a page that nicely displays today's APOD media, whether it's an image or video, and any available captions to go along with it. Below is a screenshot of the resulting page at the time of writing this guide.</p>
+
+						<div class="box alt">
+							<div class="row uniform 50%">
+								<div class="12u"><span class="image fit"><img src="images/todayAPOD.JPG" alt="" />
+								<h6>Screenshot of APOD page on May 9, 2017.</h6>
+								</span></div>
+							</div>
+						</div>
+
+					</section>
+				</div>
+			</section>
+
+		<!-- NASA Archived APOD -->
+			<section id="archivedAPOD" class="main style1">
+				<div class="container">
+					<header class="major special">
+						<h2>How to use NASA's APOD API to get Archived Media</h2>
+					</header>
+
+					<section>
+						<h4>Using the URL to Make an Archived APOD Query</h4>
+
+						<p>NASA's APOD API also allows you to search for past APOD media. It takes a <code>date</code> as a query parameter, in the value format <code>YYYY-MM-DD</code>, and return that day's APOD media. For example, let's say you want to view the very first available APOD media offered by NASA, which happened on June 16, 1995. The URL query string would look like <code>https://api.nasa.gov/planetary/apod?date=1995-06-16&api_key=DEMO_KEY</code>. As you expected, a JSON object is returned (shown below). You can browse the <a href="https://apod.nasa.gov/apod/archivepix.html">APOD archive website</a> for more info.</p>
+
+<pre><code>{
+  "date": "1995-06-16",
+  "explanation": "Today's Picture:    Explanation:  If the Earth could somehow be transformed to the ultra-high
+     density of a neutron star , it might appear as it does in the above computer generated figure. Due to the very
+     strong gravitational field, the neutron star distorts light from the background sky greatly. If you look
+     closely, two images of the constellation Orion are visible. The gravity of this particular neutron star is so
+     great that no part of the neutron star is blocked from view - light is pulled around by gravity even from the
+     back of the neutron star.   We keep an  archive file.  Astronomy Picture of the Day is brought to you by
+     Robert Nemiroff and  Jerry Bonnell . Original material on this page is copyrighted to Robert Nemiroff and
+     Jerry Bonnell.",
+  "hdurl": "https://apod.nasa.gov/apod/image/e_lens.gif",
+  "media_type": "image",
+  "service_version": "v1",
+  "title": "Neutron Star Earth",
+  "url": "https://apod.nasa.gov/apod/image/e_lens.gif"
+}</code></pre>
+
+						<hr>
+
+						<h4>Building a Simple GUI for Searching Archived APOD Media</h4>
+
+						<p>Now that we know how to search for archived APOD media by date. Let's build a simple graphical user interface (GUI) that will allow users to easily select a date, whether they want to display the photo in HD or Standard definition, and then display that media in the browser. Below is an example of code that can do this. The page is best viewed using Chrome. For other browsers, ensure you enter the date in the format <code>YYYY-MM-DD</code>, including the hyphens. More on this in a bit.</p>
+
+						<iframe width="100%" height="300" src="https://jsfiddle.net/liderrick/qq5jdL2t/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe><br><br>
+
+						<p>You can click on the <strong>Result</strong> tab and play around with the interface to get a feel of what it does. Please note that the functionality of the <strong>Date</strong> field is browser specific. For Chrome, Opera, and Microsoft Edge, the date is displayed with the format MM/DD/YYYY and has an optional pull-down calendar. Firefox and Safari treats this simply as a text input without any special formatting. In this case, in order to get the page to work correctly, the format of the date has to be <code>YYYY-MM-DD</code>.</p>
+
+						<p>To get the date input field, radio buttons, and submit button, these input elements were added to the <strong>HTML</strong> code. The rest of the <strong>HTML</strong> are placeholders for the APOD media and captions as you may be familiar with from the previous section. In the <strong>Javascript</strong> code, what's new here is a function that binds the submit button so the page knows when to grab and process the user's inputs. This is done by adding an event listener on the button. If you remember from the previous section, we can doing this by calling the <code>addEventListener()</code> function through the submit button. This time we set the <code>type</code> of event to listen for to be a <code>"click"</code>, and similarly the callback function is defined on the spot and passed as the second argument.</p>
+
+						<p>The next thing we do is have the command <code>event.preventDefault()</code>. This prevents the page from refreshing when the submit button is clicked. This allows the page to retain the user's inputs for processing. Then you'll see the familiar code of clearing the captions and removing the media element. Below that you'll see the code to verify the user entered a valid date, as reproduced below.</p>
+
+<pre><code>var inputDate = document.getElementById("date").value;
+var inputDateObj = new Date(inputDate);
+var currentDateObj = new Date();
+
+if (inputDate == "" || inputDateObj > currentDateObj) {
+  document.getElementById("dateAPOD").style.border = "solid lightgrey";
+  document.getElementById("dateCaption1").textContent = "Please select a valid date.";
+  return;
+}</code></pre>
+						<p>A JavaScript <code>Date</code> object is created from the user's date input through passing the input string date to the <code>Date</code> constructor and assigning the result of the call to the variable <code>inputDateObj</code>. If we don't pass any any argument into the <code>Date</code> constructor, by default it creates a <code>Date</code> object using the current date and time. This is what was done to create variable <code>currentDateObj</code>. In our <code>if</code> block, we evaluate two things: 1) whether the user selected a date and 2) whether the user entered a future date. We can use the equality operator (==) to test the user's input against an empty string to achieve the first and a relational operator (>) to compare the <code>Date</code> objects to achieve the second. If it's the case that the user did not select a date or selected a future date, we display the message <code>"Please select a valid date."</code> to the page using one of the available text fields. The function immediately returns and does not process the input any further.</p>
+
+						<p>After this, you'll see the familiar code of creating the <code>XMLHttpRequest</code> object by calling its constructor, assigning the result to the variable <code>req</code>, and calling the <code>open()</code> method on the object. The only thing different here is the URL query string being passed. We added a <code>date</code> query parameter and assigned the value to be the date the user input, <code>inputDate</code>. The API only recognizes the date in the specific format <code>YYYY-MM-DD</code>. This format is a default for Chrome, Opera, and Microsoft edge. But for Firefox and Safari, it's important that the user enters this same date format as well for the call to work.</p>
+
+						<p>The remaining code inside the callback function is very similar to what you've seen in the previous section. The difference here is that the radio buttons are evaluated. If <strong>HD</strong> is checked, then the page will display the photo held by the <code>hdurl</code> property, if not, then the page will use the <code>url</code> property. Additionally, if the request returns a bad status code, the page will display an error message letting the user know an error has occurred. If the user entered their date manually, then the date may have been entered incorrectly and the user is warned of such as well.</p>
+
+						<div class="box alt">
+							<div class="row uniform 50%">
+								<div class="12u"><span class="image fit"><img src="images/firstAPOD.JPG" alt="" / style ="border:solid; border-color:lightgrey">
+								<h6>Screenshot of the Archived APOD page with the date June 16, 1995 as input.</h6>
+								</span></div>
+							</div>
+						</div>
+
+
+					</section>
+				</div>
+			</section>
+
+		<!-- Using APOD as Background Splash -->
+			<section id="backgroundAPOD" class="main style2">
+				<div class="container">
+					<header class="major special">
+						<h2>Having Fun</h2>
+					</header>
+
+					<section>
+						<h4>Using APOD media as a Background Splash for a Web Page</h4>
+
+						<p>As you may have seen, NASA has some pretty awesome APOD photos in their library. Let's get the photo to show up as a background splash on a web page. The thing we have to keep in mind here is that occassionally a video may be the APOD media. In that case, we want to step back chronologically and grab the most recent image, and use that instead. Below is a code example that do.</p>
+
+						<iframe width="100%" height="300" src="https://jsfiddle.net/liderrick/x9jk3ago/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe><br><br>
+
+						<p>In order to get today's date, we use JavaScript's <code>Date</code> constructor to generate a <code>Date</code> object which is assigned to the variable <code>dateObj</code>. Since the <code>date</code>parameter in the URL query string takes a very specific format for the date, we use the <code>dateObj.toISOString()</code> function chained with the <code>split()</code>function to extract the portion of the string that is the date in the format <code>YYYY-MM-DD</code>. The full command to do this is <code>dateObj.toISOString().split("T")[0]</code>, which first takes <code>dateObj</code>, convert it to an ISO string, and splits the string at the character <code>T</code>. The substrings are stored in an array. We take the first element of that array (hence the <code>[0]</code>) which is the date in the correct format. We can then use this date string in a URL query string to request the APOD media. Depending on your location, the time-offset can cause tomorrow's date to be displayed by <code>toISOString()</code>. A quick workaround I found was to cast <code>dateObj</code> to a string using <code>toDateString()</code> and re-encode it into a <code>Date</code> object by having the line <code>dateObj = new Date(dateObj.toDateString())</code>.</p>
+
+						<p>You'll notice that the <code>async</code> parameter of the <code>XMLHttpRequest.open()</code> function is set to <code>false</code>. This is so that we wait for a response from NASA's server before continuing on. Otherwise what'll happen is that a request will be sent, then since the <code>foundImage</code> bool flag is still <code>false</code>, the <code>while</code> loop will iterate again and another request will be fired before we received back our first one. A multitude of these will happen in quick succession and eventually we'll hit our rate-limit imposed by the API key and end up without an APOD photo. Additionally we'll crash our page because we would have used up a lot of memory from creating and sending all those requests.</p>
+
+						<p>Inside the callback function, we test if the <code>media_type</code> we received in the response is an <code>image</code>. If so, we set the <code>backgroundImage</code> to be the value held by <code>hdurl</code> if that property exists, otherwise we use <code>url</code> property. The <code>foundImage</code> bool flag is set to true so the <code>while</code> loop doesn't re-iterate. If the <code>media_type</code> is something else, we take <code>dateObj</code> , decrement the date, and assign it back to <code>dateObj</code>. A correctly formatted date string is then extracted from <code>dateObj</code> and the <code>while</code> loop re-iterates. The section of code that does this reproduced below.</p>
+
+<pre><code>dateObj.setDate(dateObj.getDate() - 1);
+dateString = dateObj.toISOString().split("T")[0];</code></pre>
+
+						<p>See the page working in action by clicking on the button below.</p>
+
+						<header class="special">
+							<ul class="actions">
+								<li><a href="backgroundAPOD/index2.html" class="button">See the Example!</a></li>
+							</ul>
+						</header>
+
+					</section>
+				</div>
+			</section>
+
+		<!-- Good Luck! -->
+			<section id="goodLuck" class="main style1 special">
+				<div class="container">
+					<header class="major">
+						<h2>Good Luck!</h2>
+					</header>
+					<p>Now that you've learned the basics of APIs and how to interact with NASA's Astronomy Picture of the Day API, the learning
+					doesn't stop there! There's many, many more APIs out there for you to explore.<br>
+					Good luck and happy coding!</p>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<section id="footer">
+				<ul class="copyright">
+					<li>&copy; Derrick Li</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</section>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+			<script src="assets/nav_bar/nav.js"></script>
+	</body>
+</html>
