@@ -1,4 +1,3 @@
-Derrick Li
----
+# Derrick Li
 
 Welcome to my Portfolio Page.
