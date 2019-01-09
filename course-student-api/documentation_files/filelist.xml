@@ -5,4 +5,5 @@
  <o:File HRef="colorschememapping.xml"/>
  <o:File HRef="header.htm"/>
  <o:File HRef="filelist.xml"/>
+ <o:File HRef="themedata.thmx"/>
 </xml>
